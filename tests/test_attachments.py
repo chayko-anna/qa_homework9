@@ -1,11 +1,10 @@
-from selene.support import by
-from selene.support.conditions import be
-from selene.support.shared import browser
+import json
+
+import allure
+from allure import attachment_type
 
 
-def test_github_instructions(browser_settings):
-    browser.open("https://github.com")
-    browser.element('[class="search-input"]').click()
-    browser.element('[id="query-builder-test"]').type("eroshenkoam/allure-pytest-example").press_enter()
-    browser.element('[class="Text__StyledText-sc-17v1xeu-0 fsOMbO search-match"]').click()
-    browser.element(by.partial_text('allure-pytest-example')).should(be.visible)
+def test_attachments():
+    allure.attach("Text content", name="Text", attachment_type=attachment_type.TEXT)
+    allure.attach("<h1>Hello, world</h1>", name="Html", attachment_type=attachment_type.HTML)
+    allure.attach(json.dumps({"first": 1, "second": 2}), name="Json", attachment_type=attachment_type.JSON)
